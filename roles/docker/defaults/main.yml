@@ -1,0 +1,20 @@
+---
+# Users added to the 'docker' group so they can run docker without sudo.
+# SECURITY NOTE: docker group membership is effectively root-equivalent
+# (you can mount the host filesystem into a container). Grant deliberately.
+docker_users:
+  - "{{ ansible_user }}"
+
+# The official package set from docs.docker.com.
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+# apt suite for Docker's repo. Defaults to the host's release codename
+# (noble, resolute, ...). For a brand-new Ubuntu release that Docker hasn't
+# published packages for yet, override this to the latest codename Docker
+# does ship, e.g.:  docker_apt_suite: noble
+docker_apt_suite: "{{ ansible_distribution_release }}"

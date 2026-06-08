@@ -1,0 +1,11 @@
+.git/
+.venv/
+*.md
+.gitignore
+.dockerignore
+
+# secrets
+*.pem
+*.key
+.vault_pass
+vault_pass*

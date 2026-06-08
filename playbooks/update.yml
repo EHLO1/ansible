@@ -1,0 +1,6 @@
+---
+- name: Ensure VMs are fully updated
+  hosts: vms
+  become: true
+  roles:
+    - baseline
