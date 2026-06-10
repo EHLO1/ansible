@@ -1,9 +1,0 @@
-.venv/
-*.retry
-__pycache__/
-
-# Secrets
-.vault_pass
-vault_pass*
-*.pem
-*.key

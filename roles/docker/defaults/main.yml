@@ -1,11 +1,4 @@
 ---
-# Users added to the 'docker' group so they can run docker without sudo.
-# SECURITY NOTE: docker group membership is effectively root-equivalent
-# (you can mount the host filesystem into a container). Grant deliberately.
-docker_users:
-  - "{{ ansible_user }}"
-
-# The official package set from docs.docker.com.
 docker_packages:
   - docker-ce
   - docker-ce-cli

@@ -1,6 +1,6 @@
 ---
 - name: Ensure Docker Engine is installed and configured
-  hosts: vms
+  hosts: docker
   become: true
   roles:
     - docker

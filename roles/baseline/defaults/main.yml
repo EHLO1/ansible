@@ -1,4 +1,2 @@
 ---
-# Reboot automatically when the OS reports one is required (e.g. after a
-# kernel upgrade). Set to false to leave the host running and only report.
 baseline_reboot_if_required: true

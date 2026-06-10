@@ -1,6 +1,6 @@
 ---
-- name: Ensure VMs are fully updated
-  hosts: vms
+- name: Update Linux Hosts
+  hosts: ubuntu:debian:fedora
   become: true
   roles:
     - baseline

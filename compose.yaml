@@ -4,15 +4,10 @@ services:
       context: "."
       dockerfile: "./Dockerfile"
     command: ["site.yml"] # Which playbook to execute
-    environment:
-      - BWS_PROXMOX_URL_ID=proxmox_url_uuid
-      - BWS_PROXMOX_USER_ID=proxmox_user_uuid
-      - BWS_PROXMOX_PASSWORD_ID=proxmox_password_uuid
-      - BWS_SSH_KEY_ID=ssh_key_uuid
     secrets:
-      - bws_access_token
+      - dp_ansible_token
     restart: "no"
 
 secrets:
-  bws_access_token:
-    file: /opt/secrets/bws_access_token
+  dp_ansible_token:
+    file: /opt/secrets/dp_ansible_token

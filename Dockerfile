@@ -1,5 +1,5 @@
-# Bitwarden Secrets CLI
-FROM ghcr.io/bitwarden/bws:latest AS bws_image
+# Doppler Secrets Manager CLI
+FROM dopplerhq/cli:latest AS dpcli_image
 
 # Main Image
 FROM python:3.14-slim
@@ -8,7 +8,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install Dependencies
 RUN apt-get update && apt-get install -y \
-    jq \
     openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
@@ -16,11 +15,11 @@ RUN apt-get update && apt-get install -y \
 RUN pip install --no-cache-dir ansible proxmoxer requests
 
 # Install Required Ansible Collection for Proxmox
-RUN ansible-galaxy collection install community.general
+RUN ansible-galaxy collection install community.proxmox
 
-# Copy the bws binary
-COPY --from=bws_image /bin/bws /usr/local/bin/bws
-RUN chmod +x /usr/local/bin/bws
+# Copy the doppler binary
+COPY --from=dpcli_image /bin/doppler /usr/local/bin/doppler
+RUN chmod +x /usr/local/bin/doppler
 
 COPY ./ansible-data /opt/ansible
 WORKDIR /opt/ansible

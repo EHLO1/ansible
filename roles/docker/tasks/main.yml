@@ -1,7 +1,6 @@
 ---
 # Follows the official install steps from docs.docker.com for Debian/Ubuntu:
-# set up Docker's apt repo, install the engine + plugins, then handle the
-# documented post-install permission steps.
+# set up Docker's apt repo, install the engine and plugins.
 
 - name: Install repository prerequisites
   ansible.builtin.apt:
@@ -22,7 +21,7 @@
     url: https://download.docker.com/linux/ubuntu/gpg
     dest: /etc/apt/keyrings/docker.asc
     mode: "0644"
-  # get_url is idempotent on content; the key is re-fetched only if it changes.
+  # get_url is idempotent on content; the key is fetched only if it changes.
 
 - name: Add the Docker apt repository
   ansible.builtin.deb822_repository:
@@ -35,8 +34,8 @@
     signed_by: /etc/apt/keyrings/docker.asc
     enabled: true
     state: present
-  # deb822_repository (ansible.builtin, core 2.15+) writes a modern .sources
-  # file to /etc/apt/sources.list.d/ — no deprecated apt_key dance needed.
+  # deb822_repository (ansible.builtin, core 2.15+) writes .sources
+  # file to /etc/apt/sources.list.d/
 
 - name: Install Docker Engine, CLI, containerd and plugins
   ansible.builtin.apt:
@@ -49,19 +48,3 @@
     name: docker
     state: started
     enabled: true
-
-# --- Post-install permission steps (per the official docs) ---
-
-- name: Ensure the docker group exists
-  ansible.builtin.group:
-    name: docker
-    state: present
-
-- name: Add users to the docker group
-  ansible.builtin.user:
-    name: "{{ item }}"
-    groups: docker
-    append: true
-  loop: "{{ docker_users }}"
-  # An already-open SSH session must reconnect before the new group membership
-  # takes effect for that user.
